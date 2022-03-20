@@ -100,6 +100,17 @@
         }
       "
     />
+    <h1>Servers with permission</h1>
+    <data-table
+      :data="permissionCount"
+      :allowClick="true"
+      @value-clicked="
+        (k) => {
+          search = '!permission:' + k;
+          $store.commit('setSelected', '');
+        }
+      "
+    />
   </div>
   <div
     id="content"
@@ -136,6 +147,9 @@
 import DataTable from "./DataTable.vue";
 import MemberDataTableLazyLoad from "./MemberDataTableLazyLoad.vue";
 import SidebarServer from "./SidebarServer.vue";
+
+import { PERMISSIONS } from "../Static.js";
+
 export default {
   components: { SidebarServer, DataTable, MemberDataTableLazyLoad },
   data: () => ({
@@ -143,15 +157,30 @@ export default {
   }),
   computed: {
     searchGuilds: function () {
-      var match = this.search.match("(!feature:([A-Z_]*))? *(.*)");
-      var search = match[3];
-      var feature = match[2];
-      return this.$store.getters.guilds
-        .filter((e) => e.name.toLowerCase().includes(search.toLowerCase()))
-        .filter((e) => {
-          if (feature == null) return true;
-          return e.features.includes(feature);
-        });
+      var matches = this.search.matchAll(/!(feature|permission):([A-Z_]*)/g);
+      var searchName = this.search
+        .replace(/!(feature|permission):([A-Z_]*)/g, "")
+        .trim()
+        .toLowerCase();
+      var search = this.$store.getters.guilds.filter((e) =>
+        e.name.toLowerCase().includes(searchName)
+      );
+      for (var match of matches) {
+        if (match[1] == "feature")
+          search = search.filter((e) => {
+            return e.features.includes(match[2]);
+          });
+        else if (match[1] == "permission") {
+          var permNum = Object.entries(PERMISSIONS).find(
+            (e) => e[1] == match[2]
+          )?.[0];
+          if (permNum != null)
+            search = search.filter((e) => {
+              return (e.permissions & (1 << permNum)) != 0;
+            });
+        }
+      }
+      return search;
     },
     featuresCount: function () {
       var count = {};
@@ -159,6 +188,20 @@ export default {
         if (g.features != null)
           for (var f of g.features) {
             count[f] = count[f] != null ? count[f] + 1 : 1;
+          }
+      }
+      return Object.fromEntries(
+        Object.entries(count).sort((a, b) => a[0].localeCompare(b[0]))
+      );
+    },
+    permissionCount: function () {
+      var count = {};
+      for (var g of this.$store.state.guilds) {
+        if (g.permissions != null)
+          for (var perm of Object.entries(PERMISSIONS)
+            .filter((e) => (g.permissions & (1 << e[0])) != 0)
+            .map((e) => e[1])) {
+            count[perm] = count[perm] != null ? count[perm] + 1 : 1;
           }
       }
       return Object.fromEntries(

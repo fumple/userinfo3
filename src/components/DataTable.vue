@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { FLAGS, FEATURES } from "../Static.js";
+import { FLAGS, FEATURES, PERMISSIONS } from "../Static.js";
 
 export default {
   name: "data-table",
@@ -135,13 +135,17 @@ export default {
     ve: function (k, v) {
       // value extra
       if (k == "id") {
-        // credit to https://hugo.moe/discord/discord-id-creation-date.html
+        // modified version of code from https://github.com/hugonun/discordid2date/blob/master/main.js
+        //
+        // MIT License
+        //
+        // Copyright (c) 2019 Hugonun(https://github.com/hugonun)
         var bin = parseInt(v).toString(2);
+        var m = 64 - bin.length;
         return (
           "\nCreated at: " +
           new Date(
-            parseInt(bin.substring(0, 42 - (64 - bin.length)), 2) +
-              1420070400000
+            parseInt(bin.substring(0, 42 - m), 2) + 1420070400000
           ).toUTCString()
         );
       } else if (k == "flags" || k == "public_flags") {
@@ -151,6 +155,18 @@ export default {
             Object.entries(FLAGS)
               .filter((e) => (v & e[0]) != 0)
               .map((e) => e[1]),
+            null,
+            4
+          )
+        );
+      } else if (k == "permissions") {
+        return (
+          "\n" +
+          JSON.stringify(
+            Object.entries(PERMISSIONS)
+              .filter((e) => (v & (1 << e[0])) != 0)
+              .map((e) => e[1])
+              .sort((a, b) => a.localeCompare(b)),
             null,
             4
           )
