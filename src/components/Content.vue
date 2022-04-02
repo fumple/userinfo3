@@ -132,6 +132,13 @@
   <div
     id="content"
     class="overflow-auto m-4 text-left"
+    v-else-if="$store.state.selected == 'debug'"
+  >
+    <debug-menu />
+  </div>
+  <div
+    id="content"
+    class="overflow-auto m-4 text-left"
     v-else-if="$store.state.guilds.find((e) => e.id == $store.state.selected)"
   >
     <h1>Info about a server!</h1>
@@ -149,9 +156,10 @@ import MemberDataTableLazyLoad from "./MemberDataTableLazyLoad.vue";
 import SidebarServer from "./SidebarServer.vue";
 
 import { PERMISSIONS } from "../Static.js";
+import DebugMenu from "./DebugMenu.vue";
 
 export default {
-  components: { SidebarServer, DataTable, MemberDataTableLazyLoad },
+  components: { SidebarServer, DataTable, MemberDataTableLazyLoad, DebugMenu },
   data: () => ({
     search: "",
   }),

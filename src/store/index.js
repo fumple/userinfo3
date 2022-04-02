@@ -61,12 +61,15 @@ export default new Vuex.Store({
     },
 
     setData(state, { user, guilds, connections }) {
-      state.user = user;
-      state.guilds = guilds;
-      state.connections = connections;
+      if (user != null) state.user = user;
+      if (guilds != null) state.guilds = guilds;
+      if (connections != null) state.connections = connections;
     },
     setMember(state, data) {
       state.guildMembers.push(data);
+    },
+    clearMembers(state) {
+      state.guildMembers = [];
     },
   },
   getters: {
