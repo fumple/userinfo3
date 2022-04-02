@@ -38,7 +38,8 @@
 <script>
 import SidebarServer from "./SidebarServer.vue";
 export default {
-  name: "Sidebar",
+  name: "ServerSidebar",
+
   components: {
     SidebarServer,
   },

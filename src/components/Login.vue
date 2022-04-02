@@ -66,7 +66,8 @@ function handleError(v, e) {
 }
 
 export default {
-  name: "Login",
+  name: "LoginScreen",
+
   data: () => ({
     status: "Please wait...",
     page: "",

@@ -159,6 +159,8 @@ import { PERMISSIONS } from "../Static.js";
 import DebugMenu from "./DebugMenu.vue";
 
 export default {
+  name: "MainContent",
+
   components: { SidebarServer, DataTable, MemberDataTableLazyLoad, DebugMenu },
   data: () => ({
     search: "",

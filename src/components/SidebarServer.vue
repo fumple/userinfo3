@@ -61,7 +61,7 @@
 
 <script>
 export default {
-  name: "SidebarServer",
+  name: "ServerSidebarItem",
   props: {
     imgUrl: String,
     name: String,
