@@ -26,6 +26,22 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+// Get current hash, and set the current page to it
+const _hash = window.location.hash.substring(1);
+if (_hash.length !== 0) {
+  store.commit("setSelected", _hash);
+}
+
+// On hash change, set the current page to the hash if the page is different from the current one, to prevent spamming the browser history
+window.addEventListener("hashchange", (e) => {
+  var strhash = new URL(e.newURL).hash;
+  var hash = strhash.substring(1);
+  if (hash === "null" || hash.length <= 1) hash = "";
+  if (hash !== store.state.selectedChannel) {
+    store.commit("setSelected", hash);
+  }
+});
+
 new Vue({
   store,
   render: (h) => h(App),

@@ -49,7 +49,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setSelected(state, payload) {
+      if (state.selected === payload) return;
+
       state.selected = payload;
+      window.location.hash = "#" + payload;
     },
     setToken(state, payload) {
       state.token = payload;
