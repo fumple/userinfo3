@@ -16,7 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <template>
-  <data-table v-if="data != null" :data="data[1]" :hide="['user']" />
+  <data-table
+    v-if="data != null"
+    :data="data[1]"
+    :hide="['user']"
+    :guildId="guildId"
+  />
   <div v-else-if="status != null" style="white-space: pre">
     {{ status }}
   </div>

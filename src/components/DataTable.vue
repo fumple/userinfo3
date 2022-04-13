@@ -68,6 +68,7 @@ export default {
     data: Object,
     allowClick: Boolean,
     hide: Array,
+    guildId: String,
   },
   methods: {
     isLink(k) {
@@ -80,11 +81,23 @@ export default {
       return ["features"].includes(k);
     },
     getLink: function (k) {
-      if (k == "avatar")
+      if (k == "avatar" && this.guildId == null)
         return (
           "https://cdn.discordapp.com/avatars/" +
           this.data.id +
           "/" +
+          this.data[k] +
+          "." +
+          (this.data[k].startsWith("a_") ? "gif" : "png") +
+          "?size=1024"
+        );
+      else if (k == "avatar" && this.guildId != null)
+        return (
+          "https://cdn.discordapp.com/guilds/" +
+          this.guildId +
+          "/users/" +
+          this.data.user.id +
+          "/avatars/" +
           this.data[k] +
           "." +
           (this.data[k].startsWith("a_") ? "gif" : "png") +
