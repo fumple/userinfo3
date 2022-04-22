@@ -41,7 +41,7 @@
       @click="refresh('/users/@me/connections', 'connections')"
       :disabled="pending"
       class="m-1"
-      >Refresh guild data [/users/@me/connections]</b-button
+      >Refresh user connections data [/users/@me/connections]</b-button
     >
     <hr />
     <b-button @click="clearMemberCache" class="m-1"
