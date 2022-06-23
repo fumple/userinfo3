@@ -18,7 +18,7 @@
 <template>
   <div
     id="content"
-    class="overflow-auto m-4"
+    class="overflow-auto p-3"
     v-if="$store.state.selected == null || $store.state.selected == ''"
   >
     <h1 class="m-0">Welcome to Discord UserInfo 3.0!</h1>
@@ -65,8 +65,7 @@
       <a href="https://discord.com/developers/docs" target="_blank"
         >https://discord.com/developers/docs</a
       ><br />
-      <a href="#" @click="() => $store.commit('setToken', null)">Log out</a
-      ><br />
+      <a href="#logout">Click here to log out</a><br />
       <br />
       <!-- if you made a fork of this website, uncomment the line below and fill it -->
       <!-- This is a modified version of the app above
@@ -86,7 +85,7 @@
   </div>
   <div
     id="content"
-    class="overflow-auto m-4"
+    class="overflow-auto p-3"
     v-else-if="$store.state.selected == 'stats'"
   >
     <h1>Servers with feature</h1>
@@ -114,7 +113,7 @@
   </div>
   <div
     id="content"
-    class="overflow-auto m-4 text-left"
+    class="overflow-auto p-3 text-left"
     v-else-if="$store.state.selected == 'user'"
   >
     <h1>Info about you!</h1>
@@ -131,14 +130,21 @@
   </div>
   <div
     id="content"
-    class="overflow-auto m-4 text-left"
+    class="overflow-auto p-3 text-left"
     v-else-if="$store.state.selected == 'debug'"
   >
     <debug-menu />
   </div>
   <div
     id="content"
-    class="overflow-auto m-4 text-left"
+    class="overflow-auto p-3 text-left"
+    v-else-if="$store.state.selected == 'logout'"
+  >
+    <logout-screen />
+  </div>
+  <div
+    id="content"
+    class="overflow-auto p-3 text-left"
     v-else-if="$store.state.guilds.find((e) => e.id == $store.state.selected)"
   >
     <h1>Info about a server!</h1>
@@ -157,11 +163,18 @@ import SidebarServer from "./SidebarServer.vue";
 
 import { PERMISSIONS } from "../Static.js";
 import DebugMenu from "./DebugMenu.vue";
+import LogoutScreen from "./LogoutScreen.vue";
 
 export default {
   name: "MainContent",
 
-  components: { SidebarServer, DataTable, MemberDataTableLazyLoad, DebugMenu },
+  components: {
+    SidebarServer,
+    DataTable,
+    MemberDataTableLazyLoad,
+    DebugMenu,
+    LogoutScreen,
+  },
   data: () => ({
     search: "",
   }),
