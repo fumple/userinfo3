@@ -50,9 +50,12 @@
     <hr />
     <h2>Set a different token</h2>
     <b-form class="m-1">
-      <b-form-input 
-        :disabled="pending" type="password"
-        v-model="token" placeholder="Enter a custom token (including bots!) here"></b-form-input>
+      <b-form-input
+        :disabled="pending"
+        type="password"
+        v-model="token"
+        placeholder="Enter a custom token (including bots!) here"
+      ></b-form-input>
       <b-button @click="setToken">Set and refresh all data</b-button>
     </b-form>
     <a href="#logout">Go to logout screen</a>
@@ -96,13 +99,13 @@ export default {
       this.alertVariant = "info";
       this.alertMsg = "Setting token...";
       this.$store.commit("setToken", this.token);
-      await this.refresh('/users/@me', 'user')
-      await this.refresh('/users/@me/guilds', 'guilds')
-      await this.refresh('/users/@me/connections', 'connections')
+      await this.refresh("/users/@me", "user");
+      await this.refresh("/users/@me/guilds", "guilds");
+      await this.refresh("/users/@me/connections", "connections");
       this.clearMemberCache();
       this.alertVariant = "success";
       this.alertMsg = "Done!";
-    }
+    },
   },
   computed: {
     pending: function () {
