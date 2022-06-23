@@ -53,6 +53,7 @@ export default {
   background-color: #202225;
   user-select: none;
   flex-shrink: 0;
+  scrollbar-width: thin;
 }
 #sidebar hr {
   margin: 10px 0 5px 0;
