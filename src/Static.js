@@ -102,8 +102,8 @@ export const PERMISSIONS = [
     "MODERATE_MEMBERS",
     "VIEW_CREATOR_MONETIZATION_ANALYTICS",
     "USE_SOUNDBOARD",
-    "Unknown (43)",
-    "Unknown (44)",
-    "Unknown (45)",
+    "Unknown_43",
+    "Unknown_44",
+    "Unknown_45",
     "SEND_VOICE_MESSAGES"
 ]
