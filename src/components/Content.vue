@@ -165,6 +165,8 @@ import { PERMISSIONS } from "../Static.js";
 import DebugMenu from "./DebugMenu.vue";
 import LogoutScreen from "./LogoutScreen.vue";
 
+const SearchFilterRegex = /!(feature|permission):([A-Za-z0-9_]*)/g;
+
 export default {
   name: "MainContent",
 
@@ -180,9 +182,9 @@ export default {
   }),
   computed: {
     searchGuilds: function () {
-      var matches = this.search.matchAll(/!(feature|permission):([A-Z_]*)/g);
+      var matches = this.search.matchAll(SearchFilterRegex);
       var searchName = this.search
-        .replace(/!(feature|permission):([A-Z_]*)/g, "")
+        .replace(SearchFilterRegex, "")
         .trim()
         .toLowerCase();
       var search = this.$store.getters.guilds.filter((e) =>
