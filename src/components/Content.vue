@@ -201,7 +201,7 @@ export default {
           )?.[0];
           if (permNum != null)
             search = search.filter((e) => {
-              return (e.permissions & (1 << permNum)) != 0;
+              return (BigInt(e.permissions) & (1n << BigInt(permNum))) != 0;
             });
         }
       }
@@ -224,7 +224,7 @@ export default {
       for (var g of this.$store.state.guilds) {
         if (g.permissions != null)
           for (var perm of Object.entries(PERMISSIONS)
-            .filter((e) => (g.permissions & (1 << e[0])) != 0)
+            .filter((e) => (BigInt(g.permissions) & (1n << BigInt(e[0]))) != 0)
             .map((e) => e[1])) {
             count[perm] = count[perm] != null ? count[perm] + 1 : 1;
           }

@@ -177,7 +177,7 @@ export default {
           "\n" +
           JSON.stringify(
             Object.entries(PERMISSIONS)
-              .filter((e) => (v & (1 << e[0])) != 0)
+              .filter((e) => (BigInt(v) & (1n << BigInt(e[0]))) != 0)
               .map((e) => e[1])
               .sort((a, b) => a.localeCompare(b)),
             null,
